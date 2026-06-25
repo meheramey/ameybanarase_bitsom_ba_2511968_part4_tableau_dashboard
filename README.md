@@ -25,3 +25,35 @@ To establish a baseline for our dashboard metrics and calculated expressions, th
 2. **Fulfillment Timeline:** The dynamic delivery timeframe is calculated as the continuous calendar days elapsed between `Order Date` and `Ship Date`. This assumes standard continuous operation without taking localized regional shipping or warehouse holidays into consideration.
 3. **Discount Allocation:** The `Discount` field is treated as a continuous proportion applied uniformly at the transaction line-item level, representing promotional price drops affecting final gross revenue.
 4. **Direct Profit Representation:** The `Profit` measure is assumed to reflect direct product margins post-manufacturing and logistics costs, without taking corporate-level operational overheads (like corporate tax or marketing CAC) into account.
+# Retail Operations: Business Insights & Technical Calculations
+
+## 🛠️ Task 2: Tableau Calculated Fields Documentation
+
+To drive deep strategic analysis and cross-functional performance tracking, the following seven custom calculated fields were engineered within Tableau Desktop:
+
+---
+
+### 1. Average order value
+* **Formula / Logic:** `SUM([Sales]) / COUNTD([Order Id])`
+* **Data Type:** Continuous Measure (Currency)
+* **Business Purpose:** Tracks the average transactional basket size of customers to evaluate purchasing behavior.
+
+### 2. Cost
+* **Formula / Logic:** `[Sales] - [Profit]`
+* **Data Type:** Continuous Measure (Currency)
+* **Business Purpose:** Calculates the absolute financial expenditure incurred for product production and baseline fulfillment logistics.
+
+### 3. Discount Impact
+* **Formula / Logic:** `SUM([Sales]) * SUM([Discount])`
+* **Data Type:** Continuous Measure (Currency/Value)
+* **Business Purpose:** Calculates the gross financial scale of promotions by compounding total sales volume against the total discount depth.
+
+### 4. Profit Margin
+* **Formula / Logic:** `[Profit] / [Sales]`
+* **Data Type:** Continuous Measure (Formatted as Percentage `%`)
+* **Business Purpose:** Measures net profitability efficiency per unit of currency generated to isolate structural financial leaks.
+
+### 5. Profitable Order Flag
+* **Formula / Logic:** 
+```tableau
+IF [Profit] > 0 THEN "Profitable" ELSE "Loss" END
