@@ -58,66 +58,69 @@ To drive deep strategic analysis and cross-functional performance tracking, the 
 ```tableau
 IF [Profit] > 0 THEN "Profitable" ELSE "Loss" END
 ---
-
-### 3. **Tableau Workbook Description**
-The `tableau/executive_dashboard.twbx` is a fully standalone, packaged workbook developed using Tableau. It contains comprehensive data source schemas, pre-calculated metadata layers, and custom visual worksheets seamlessly compiled into a centralized, executive-ready dashboard interface.
+## 3. Tableau Workbook Description
+The `tableau/executive_dashboard.twbx` is a fully standalone packaged workbook developed using Tableau. It contains comprehensive data source schemas, pre-calculated metadata layers, and custom visual worksheets compiled into a centralized executive-ready dashboard interface.
 
 ---
 
 ## 4. Calculated Fields Created
 To support advanced visual mapping and business logic, the following calculated fields were constructed natively within the workbook:
-* **`Profitable Order Flag`**
-  ```tableau
-  IF [Profit] > 0 THEN "Profitable" ELSE "Loss" END
-Shipping Delay Bucket (Differentiates operational turnaround tracking into discrete intervals like Same Day, 2–3 Days, 4–7 Days).
 
-Profit Margin % (SUM([Profit]) / SUM([Sales]) to track margins).
+| Field | Formula | Purpose |
+|-------|---------|---------|
+| Profitable Order Flag | `IF [Profit] > 0 THEN "Profitable" ELSE "Loss" END` | Flags loss-making orders |
+| Shipping Delay Bucket | DATEDIFF based categorization | Groups orders into Same Day, 2-3 Days, 4-7 Days, 7+ Days |
+| Profit Margin | `SUM([Profit]) / SUM([Sales])` | Tracks profit margin % |
+| Cost | `SUM([Sales]) - SUM([Profit])` | Total cost incurred |
+| Average Order Value | `SUM([Sales]) / COUNTD([Order Id])` | Avg spend per order |
+| Return Rate | `SUM(IF [Return Flag]="Yes" THEN 1 ELSE 0 END) / COUNT([Order Id])` | % of returned orders |
+| Discount Impact | `SUM([Sales]) * SUM([Discount])` | Revenue lost due to discounts |
+
+---
+
 ## 5. Dashboard Components
 The interface integrates 5 complementary operational views aligned via a strict grid system:
 
-Sales Trend (Dual-Axis Line Chart): Tracks cyclical monthly revenue streams against net profit baselines.
+- **Sales Trend (Line Chart):** Tracks cyclical monthly revenue streams against net profit baselines.
+- **Regional Performance (Bar Chart):** Highlights sales and profit performance across regions.
+- **Category Profitability (Horizontal Bar Chart):** Compares sub-category margins, exposing high-performing and loss-making lines.
+- **Discount Impact (Scatter Plot):** Correlates the exact threshold where discounts actively destroy profit margins.
+- **Shipping Delay Bucket (Bar Chart):** Quantifies distribution volume patterns inside sluggish fulfillment cycles.
 
-Regional Performance (Geographic Filled Map): Highlights spatial concentration and market share density across states.
-
-Category Profitability (Sorted Horizontal Bar Chart): Compares granular sub-category margins, exposing high-performing and loss-making lines.
-
-Discount Impact (Scatter Plot): Correlates the exact statistical threshold where discounts actively destroy average profit margins.
-
-Shipping Delay Bucket (Vertical Column Chart): Quantifies distribution volume patterns trapped inside sluggish fulfillment cycles.
+---
 
 ## 6. Filters and Interactions Used
-Global Interactivity: Top-level dropdown filters (Region, Category, Customer Segment) use the "All Using This Data Source" dependency. Slicing any single filter updates all 5 charts instantly.
+- **Global Filters:** Top-level dropdown filters (Region, Category, Customer Segment) use "All Using This Data Source" dependency. Slicing any single filter updates all charts instantly.
+- **Cross-Filtering Tooltips:** Hovering over any data point dynamically reveals contextual tooltips displaying secondary financial health layers.
 
-Cross-Filtering Tooltips: Hovering over any localized data point or geographic state dynamically reveals contextual tooltips displaying secondary financial health layers.
+---
 
 ## 7. Key Business Insights
-Seasonal Sales timeline: Sharp, predictable revenue peaks occur in the latter half of consecutive fiscal years, followed by deep seasonal drops in Q1.
+1. **Seasonal Sales:** Sharp revenue peaks occur in Q4 of consecutive fiscal years, followed by deep seasonal drops in Q1.
+2. **Geographic Concentration:** Revenue is heavily locked within primary hubs, leaving alternative regional belts under-penetrated.
+3. **Sub-Category Margin Erosion:** Technology segment acts as the main profit engine, while Tables sub-category under Furniture operates as a severe loss-leader.
+4. **Discount Thresholds:** Margins remain viable under low discounts but degrade sharply into losses once discount rates exceed 20-25%.
 
-Geographic Centralization: Revenue is heavily locked within primary hubs like Madhya Pradesh, Maharashtra, and Uttar Pradesh, leaving alternative regional belts under-penetrated.
-
-Sub-Category Margin Erosion: The Technology segment acts as the main profit engine, while the Tables sub-category under Furniture operates as a severe structural loss-leader.
-
-Discount Thresholds: Transactional margins remain viable under low discounts but degrade sharply into severe losses once discount rates exceed the 20% to 25% window.
+---
 
 ## 8. Dashboard Story Summary
-The overarching narrative connects our macro achievements ($33.3M Sales / $3.3M Profit) to operational bottlenecks. It guides leadership from top-line success down to underlying vulnerabilities—exposing how unguided retail discounts and a sluggish supply chain (4-7 Days delivery bucket) undermine our highly lucrative technology product lines. The story outlines hard guardrails (a 15% discount cap) to stabilize our margins.
+The overarching narrative connects macro achievements ($33.3M Sales / $3.3M Profit) to operational bottlenecks. It guides leadership from top-line success down to underlying vulnerabilities — exposing how unguided discounts and sluggish supply chain (4-7 Days delivery bucket) undermine our lucrative technology product lines. The story outlines hard guardrails (a 15% discount cap) to stabilize margins.
+
+---
 
 ## 9. Assumptions and Limitations
-Historical Uniformity: Assumes historical sales trend patterns and customer behaviors will carry forward consistently into future forecasting cycles.
+- **Historical Uniformity:** Assumes historical sales trend patterns will carry forward consistently into future forecasting cycles.
+- **Customer-Level Blindspot:** Data aggregates macro performance but cannot track individual customer churn rates or sentiment profiles.
+- **Static Context:** Lacks external market benchmarking data, competitor tracking, or currency fluctuation matrices.
 
-Customer-Level Blindspot: The data aggregates macro performance effectively but cannot track individual customer churn rates, sentiment profiles, or granular B2B contract lifecycles.
-
-Static Context: Lacks external market benchmarking data, localized competitor tracking, or currency fluctuation matrices.
+---
 
 ## 10. Screenshots Included
-The required visual evidence is stored inside the repository for rapid review:
 
-screenshots/full_dashboard.png - Complete operational dashboard layout.
-
-screenshots/sales_trend_view.png - Close-up of dual-axis timeline chart.
-
-screenshots/regional_performance_view.png - Geographic distribution profile map.
-
-screenshots/category_profitability_view.png - Sub-category sorted bar chart matrix.
-
-screenshots/filter_interaction_view.png - Validated proof of dynamic global filter functionality.
+| File | Description |
+|------|-------------|
+| `screenshots/full_dashboard.png` | Complete operational dashboard layout |
+| `screenshots/sales_trend_view.png` | Close-up of sales trend line chart |
+| `screenshots/regional_performance_view.png` | Regional performance bar chart |
+| `screenshots/category_profitability_view.png` | Sub-category sorted bar chart |
+| `screenshots/filter_interaction_view.png` | Proof of dynamic global filter functionality |
