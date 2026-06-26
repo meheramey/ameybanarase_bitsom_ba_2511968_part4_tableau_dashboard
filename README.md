@@ -57,7 +57,7 @@ To drive deep strategic analysis and cross-functional performance tracking, the 
 * **Formula / Logic:** 
 ```tableau
 IF [Profit] > 0 THEN "Profitable" ELSE "Loss" END
----
+```
 ## 3. Tableau Workbook Description
 The `tableau/executive_dashboard.twbx` is a fully standalone packaged workbook developed using Tableau. It contains comprehensive data source schemas, pre-calculated metadata layers, and custom visual worksheets compiled into a centralized executive-ready dashboard interface.
 
